@@ -31,6 +31,8 @@ INSTALLED_APPS = [
 
     # newly added
     'users.apps.UsersConfig',
+    'billing.apps.BillingConfig',
+    'rest_framework', # enables DRF
 ]
 
 MIDDLEWARE = [
