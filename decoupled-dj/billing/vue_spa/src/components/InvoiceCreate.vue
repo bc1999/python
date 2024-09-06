@@ -70,7 +70,10 @@ export default {
     return {
       users: [
         { id: 1, name: "xadrg", email: "xadrg@acme.io" },
-        { id: 2, name: "olcmf", email: "olcmf@zyx.dev" }
+        { id: 2, name: "olcmf", email: "olcmf@zyx.dev" },
+        { id: 3, name: "rlcmf", email: "rlcmf@zyx.dev" },
+        { id: 4, name: "alcmf", email: "ralcmf@zyx.dev" },
+        { id: 5, name: "xlcmf", email: "xalcmf@zyx.dev" }
       ]
     };
   },
@@ -88,9 +91,14 @@ export default {
         }
       ];
 
+      const csrfToken = this.$cookies.get("csrftoken");
+
       fetch("/billing/api/invoices/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken
+        },
         body: JSON.stringify(data)
       })
         .then(response => {

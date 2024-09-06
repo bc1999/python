@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-# from django.contrib import admin
+from django.contrib import admin
 # from django.urls import path
 
 # urlpatterns = [
@@ -24,4 +24,21 @@ Including another URLconf
 
 from django.urls import path, include
 
+from django.conf import settings # added new
+
 urlpatterns = [path("billing/", include("billing.urls", namespace="billing"))]
+
+# -------------------
+# added ramdomness to admin url to mitigate automated brute force attacks
+
+if settings.DEBUG:
+    urlpatterns = [
+        path("admin/", admin.site.urls),
+    ] + urlpatterns
+
+if not settings.DEBUG:
+    urlpatterns = [
+        path("77randomAdmin@33/", admin.site.urls),
+    ] + urlpatterns
+
+# -------------------
