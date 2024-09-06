@@ -18,6 +18,19 @@
                "python3-certbot-nginx"]
         update_cache: yes
 
+    - name: Configure Nodesource repo Node.js
+      shell: >
+        curl -fsSL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+      tags:
+        - nodejs
+
+    - name: Install Node.js
+      apt:
+        name: nodejs
+        update_cache: yes
+      tags:
+        - nodejs
+
     - name: Create an unprivileged user
       user:
         name: "{{ user }}"
@@ -27,7 +40,7 @@
       ansible.builtin.git:
         repo: 'https://github.com/valentinogagliardi/decoupled-dj.git'
         dest: /home/{{ user }}/code
-        version: chapter_06_security_deployment
+        version: chapter_09_authentication
       notify:
         - restart gunicorn
       tags:
@@ -43,10 +56,30 @@
       tags:
         - deploy
 
+    - name: Install JS deps for billing SPA
+      ansible.builtin.command: npm ci
+      args:
+        chdir: /home/{{ user }}/code/billing/vue_spa
+      become: yes
+      become_user: "{{ user }}"
+      tags:
+        - deploy
+
+    - name: Build production bundle for billing SPA
+      ansible.builtin.command: npm run build
+      args:
+        chdir: /home/{{ user }}/code/billing/vue_spa
+      become: yes
+      become_user: "{{ user }}"
+      tags:
+        - deploy
+
     - name: Configure production .env
       ansible.builtin.command: cp decoupled_dj/settings/.env.production.example decoupled_dj/settings/.env
       args:
         chdir: /home/{{ user }}/code
+      tags:
+        - deploy
 
     - name: Install production dependencies in virtualenv
       pip:
@@ -91,9 +124,14 @@
       command: /usr/bin/certbot --nginx -n \
               --domain {{ domain }},static.{{ domain }} \
               --expand --redirect --agree-tos --email {{ ssl_email }}
+      when: not trustme
       tags:
         - nginx
         - ssl
+
+    - name: Deploy fake SSL certificates
+      import_tasks: fake_ssl.yml
+      when: trustme | bool
 
     - name: Configure Gunicorn service in Systemd
       template:
