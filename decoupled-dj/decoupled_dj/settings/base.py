@@ -34,8 +34,11 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'billing.apps.BillingConfig',
     'rest_framework', # enables DRF
+    'login'
     
 ]
+
+LOGIN_REDIRECT_URL = "/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -26,7 +26,11 @@ from django.urls import path, include
 
 from django.conf import settings # added new
 
-urlpatterns = [path("billing/", include("billing.urls", namespace="billing"))]
+urlpatterns = [
+        path("billing/", include("billing.urls", namespace="billing")),
+        path("auth/", include("login.urls", namespace="auth"))
+    
+    ]
 
 # -------------------
 # added ramdomness to admin url to mitigate automated brute force attacks
