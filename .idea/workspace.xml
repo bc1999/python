@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e945d797-ebbd-4b1e-97fe-ec21f6a6a29a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SlidingWindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AlgoMapSolution.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LinkedList.py" beforeDir="false" afterPath="$PROJECT_DIR$/LinkedList.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +29,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.AlgoMapSolution.executor": "Run",
     "Python.LinkedList.executor": "Run",
     "Python.SlidingWindow.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
